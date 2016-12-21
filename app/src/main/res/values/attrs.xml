@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ViewRecorder">
+        <!-- 一次拍摄最长时间 -->
+        <attr name="record_max_time_millis" format="integer"/>
+        <!-- 一次拍摄最短时间 -->
+        <attr name="record_min_time_millis" format="integer"/>
+        <!-- 进度条刷新时间 -->
+        <attr name="record_refresh_time_millis" format="integer"/>
+        <!-- 视频分辨率宽度 -->
+        <attr name="record_width" format="integer"/>
+        <!-- 视频分辨率高度 -->
+        <attr name="record_height" format="integer"/>
+    </declare-styleable>
+
+</resources>
