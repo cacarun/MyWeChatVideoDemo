@@ -99,6 +99,10 @@ public class RecorderView extends LinearLayout implements SurfaceHolder.Callback
         recordMinTimeMillis = a.getInteger(R.styleable.ViewRecorder_record_min_time_millis, 1000);
         recordRefreshTimeMillis = a.getInteger(R.styleable.ViewRecorder_record_refresh_time_millis, 20);
 
+        Log.e(TAG, "recordWidth: " + recordWidth + " recordHeight: " + recordHeight
+        + " recordMaxTimeMillis: " + recordMaxTimeMillis + " recordMinTimeMillis: " + recordMinTimeMillis
+        + " recordRefreshTimeMillis: " + recordRefreshTimeMillis);
+
         a.recycle();
 
         initView();
@@ -399,30 +403,32 @@ public class RecorderView extends LinearLayout implements SurfaceHolder.Callback
                 //mediaRecorder.reset();
                 camera.unlock();
                 mediaRecorder.setCamera(camera);
+
                 //从相机采集视频
                 mediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
                 // 从麦克采集音频信息
                 mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-                // TODO: 2016/10/20  设置视频格式
+
                 mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
 
-                // Camera does not support setVideoSize()
+                // 设置分辨率
                 mediaRecorder.setVideoSize(recordWidth, recordHeight);
 
-                //每秒的帧数 Requested frame rate (24) is not supported: 30,15
+                //每秒的帧数
                 mediaRecorder.setVideoFrameRate(30);
 
                 //编码格式
-                mediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.DEFAULT); // TODO
+                mediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
                 mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
                 // 设置帧频率，然后就清晰了
 //                mediaRecorder.setVideoEncodingBitRate(1 * 1024 * 1024 * 100);
                 mediaRecorder.setVideoEncodingBitRate(4000000);
-                // TODO: 2016/10/20 临时写个文件地址, 稍候该!!!
+
                 File targetDir = Environment.
                         getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);
                 targetFile = new File(targetDir,
                         SystemClock.currentThreadTimeMillis() + ".mp4");
+
                 mediaRecorder.setOutputFile(targetFile.getAbsolutePath());
                 mediaRecorder.setPreviewDisplay(surfaceHolder.getSurface());
 
